@@ -656,22 +656,22 @@ function renderFinancialReports(parentEl) {
             <div class="mb-6 flex border-b border-gray-300">
                 <button id="tab-daily"
                     class="py-2 px-6 font-semibold desktop-btn rounded-t-md border-b-0
-                    ${appState.activeSection === 'daily' ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
-                    style="${appState.activeSection === 'daily' ? 'background: linear-gradient(to bottom, #20B2AA 0%, #177B7B 100%); border-color: #148f8f; color: #fff;' : ''}"
+                    ${appState.activeSection === 'daily' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                    style="${appState.activeSection === 'daily' ? 'background: linear-gradient(to bottom, #4A5568 0%, #2D3748 100%); border-color: #2D3748; color: #fff;' : ''}"
                     >
                     Daily Report
                 </button>
                 <button id="tab-recoveries"
                     class="py-2 px-6 font-semibold desktop-btn rounded-t-md border-b-0
-                    ${appState.activeSection === 'recoveries' ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
-                    style="${appState.activeSection === 'recoveries' ? 'background: linear-gradient(to bottom, #20B2AA 0%, #177B7B 100%); border-color: #148f8f; color: #fff;' : ''}"
+                    ${appState.activeSection === 'recoveries' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                    style="${appState.activeSection === 'recoveries' ? 'background: linear-gradient(to bottom, #4A5568 0%, #2D3748 100%); border-color: #2D3748; color: #fff;' : ''}"
                     >
                     Add Recoveries
                 </button>
                 <button id="tab-expenses"
                     class="py-2 px-6 font-semibold desktop-btn rounded-t-md border-b-0
-                    ${appState.activeSection === 'expenses' ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
-                    style="${appState.activeSection === 'expenses' ? 'background: linear-gradient(to bottom, #20B2AA 0%, #177B7B 100%); border-color: #148f8f; color: #fff;' : ''}"
+                    ${appState.activeSection === 'expenses' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                    style="${appState.activeSection === 'expenses' ? 'background: linear-gradient(to bottom, #4A5568 0%, #2D3748 100%); border-color: #2D3748; color: #fff;' : ''}"
                     >
                     Add Expenses
                 </button>
@@ -720,11 +720,12 @@ function renderDailyReport(parentEl, messageArea) {
     const totalDailySales = dailySales.reduce((sum, sale) => sum + parseFloat(sale.grandTotal), 0);
     const totalDailyRecoveries = dailyRecoveries.reduce((sum, rec) => sum + rec.amount, 0);
     const totalDailyExpenses = dailyExpenses.reduce((sum, exp) => sum + exp.amount, 0);
-    const dailyNet = (totalDailySales + totalDailyRecoveries - totalDailyExpenses).toFixed(2); // Corrected calculation
+    // Changed: Recoveries now decrease net profit
+    const dailyNet = (totalDailySales - totalDailyRecoveries - totalDailyExpenses).toFixed(2);
 
     parentEl.innerHTML = `
-        <div class="p-4 border border-teal-200 rounded-md bg-teal-50 shadow-sm">
-            <h3 class="text-xl font-semibold mb-4 text-teal-800">Daily Report Summary</h3>
+        <div class="p-4 border border-gray-200 rounded-md bg-gray-50 shadow-sm">
+            <h3 class="text-xl font-semibold mb-4 text-gray-800">Daily Report Summary</h3>
             <div class="mb-4">
                 <label for="reportDate" class="block text-gray-700 text-sm font-semibold mb-1">Select Date:</label>
                 <input type="date" id="reportDateInput" value="${appState.reportDate}"
@@ -738,7 +739,7 @@ function renderDailyReport(parentEl, messageArea) {
                 </div>
                 <div class="bg-white p-4 rounded-md shadow-sm border border-gray-200">
                     <p class="text-gray-600">Total Recoveries:</p>
-                    <p class="text-2xl font-bold text-blue-600">PKR ${totalDailyRecoveries.toFixed(2)}</p>
+                    <p class="text-2xl font-bold text-red-600">PKR ${totalDailyRecoveries.toFixed(2)}</p>
                 </div>
                 <div class="bg-white p-4 rounded-md shadow-sm border border-gray-200">
                     <p class="text-gray-600">Total Expenses:</p>
@@ -747,10 +748,10 @@ function renderDailyReport(parentEl, messageArea) {
             </div>
             <div class="bg-white p-4 rounded-md shadow-sm border border-gray-200 text-center">
                 <p class="text-gray-600">Daily Net:</p>
-                <p class="text-3xl font-bold text-teal-700">PKR ${dailyNet}</p>
+                <p class="text-3xl font-bold ${dailyNet < 0 ? 'text-red-700' : 'text-green-700'}">PKR ${dailyNet}</p>
             </div>
 
-            <h4 class="text-lg font-semibold mt-6 mb-3 text-teal-800">Sales for ${appState.reportDate}</h4>
+            <h4 class="text-lg font-semibold mt-6 mb-3 text-gray-800">Sales for ${appState.reportDate}</h4>
             <div class="overflow-x-auto rounded-md border border-gray-300 shadow-sm mb-4">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="desktop-table-header">
@@ -776,7 +777,7 @@ function renderDailyReport(parentEl, messageArea) {
                 </table>
             </div>
 
-            <h4 class="text-lg font-semibold mt-6 mb-3 text-teal-800">Recoveries for ${appState.reportDate}</h4>
+            <h4 class="text-lg font-semibold mt-6 mb-3 text-gray-800">Recoveries for ${appState.reportDate}</h4>
             <div class="overflow-x-auto rounded-md border border-gray-300 shadow-sm mb-4">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="desktop-table-header">
@@ -800,7 +801,7 @@ function renderDailyReport(parentEl, messageArea) {
                 </table>
             </div>
 
-            <h4 class="text-lg font-semibold mt-6 mb-3 text-teal-800">Expenses for ${appState.reportDate}</h4>
+            <h4 class="text-lg font-semibold mt-6 mb-3 text-gray-800">Expenses for ${appState.reportDate}</h4>
             <div class="overflow-x-auto rounded-md border border-gray-300 shadow-sm">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="desktop-table-header">
@@ -833,8 +834,8 @@ function renderDailyReport(parentEl, messageArea) {
 
 function renderAddRecoveries(parentEl, messageArea) {
     parentEl.innerHTML = `
-        <div class="p-6 border border-teal-200 rounded-md bg-teal-50 shadow-sm">
-            <h3 class="text-xl font-semibold mb-6 text-teal-800">Add New Recovery</h3>
+        <div class="p-6 border border-gray-200 rounded-md bg-gray-50 shadow-sm">
+            <h3 class="text-xl font-semibold mb-6 text-gray-800">Add New Recovery</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div>
                     <label for="recDate" class="block text-gray-700 text-sm font-semibold mb-1">Date:</label>

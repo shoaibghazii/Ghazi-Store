@@ -1,0 +1,95 @@
+/* style.css */
+
+/* Custom styles to mimic desktop app feel */
+
+.desktop-app-container {
+    /* Mimic a desktop window */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background: #f0f0f0; /* Lighter background like many desktop apps */
+}
+
+/* Custom button style to emulate a '3D' push button look with dark grey color */
+.desktop-btn {
+    /* Dark Grey color */
+    background: linear-gradient(to bottom, #718096 0%, #4A5568 100%); /* Tailwind gray-500 to gray-700 */
+    border: 1px solid #2D3748; /* Darker grey border */
+    color: #fff; /* White text for contrast */
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); /* Subtle text shadow */
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 -1px 0 rgba(0, 0, 0, 0.1) inset, 0 2px 4px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+    transition: all 0.1s ease-in-out;
+}
+
+.desktop-btn:hover {
+    background: linear-gradient(to bottom, #4A5568 0%, #2D3748 100%); /* Darker on hover */
+    border-color: #2D3748;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 -1px 0 rgba(0, 0, 0, 0.1) inset, 0 3px 5px rgba(0, 0, 0, 0.25);
+}
+
+.desktop-btn:active {
+    background: linear-gradient(to top, #4A5568 0%, #718096 100%); /* Pushed in effect */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    transform: translateY(1px);
+}
+
+/* Red button specific styles (for logout/remove) */
+.desktop-btn.red {
+    background: linear-gradient(to bottom, #EF4444 0%, #DC2626 100%); /* Tailwind red-500 to red-700 */
+    border-color: #B91C1C; /* Darker red */
+}
+
+.desktop-btn.red:hover {
+    background: linear-gradient(to bottom, #DC2626 0%, #B91C1C 100%);
+    border-color: #991B1B;
+}
+
+.desktop-btn.red:active {
+    background: linear-gradient(to top, #DC2626 0%, #EF4444 100%);
+}
+
+
+/* Specific styling for nav buttons in the sidebar */
+.desktop-nav-btn {
+    background: transparent;
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
+    color: #4a5568; /* Darker gray for sidebar text */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.desktop-nav-btn.active,
+.desktop-nav-btn:hover {
+    background-color: #d1d5db; /* Light gray for sidebar hover/active */
+    color: #333;
+    border-left: 4px solid #4A5568; /* Accent border matching new button color */
+    padding-left: 1rem; /* Adjust padding for accent border */
+}
+
+/* Input fields with a slight raised look */
+.desktop-input {
+    border: 1px solid #a0a0a0;
+    background-color: #fff;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.desktop-input:focus {
+    outline: none;
+    border-color: #718096; /* Matching new primary color */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 0 2px rgba(113, 128, 150, 0.3); /* Matching new primary color */
+}
+
+/* Table styling adjustments */
+.desktop-table-header th {
+    background-color: #e2e8f0; /* Light blue-gray for headers */
+    border-bottom: 1px solid #cbd5e0;
+    font-weight: 600;
+}
+
+.desktop-table-row:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+.desktop-table-row:hover {
+    background-color: #e8e8f8; /* Light hover effect */
+}
